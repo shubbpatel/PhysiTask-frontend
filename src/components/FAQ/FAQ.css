@@ -1,0 +1,36 @@
+.faq {
+    text-align: center;
+    padding: 2rem 0;
+    background-color: #ffffff;
+  }
+  
+  .faq-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 2rem;
+  }
+  
+  .faq-item {
+    width: 45%;
+    margin-bottom: 1rem;
+    border: 2px solid rgb(62, 165, 220);
+    padding: 1rem;
+    border-radius: 10px;
+  }
+  
+  .faq-item h3 {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .faq-item p {
+    text-align: left;
+  }
+  
+  @media (max-width: 768px) {
+    .faq-item {
+      width: 100%;
+    }
+  }
+  

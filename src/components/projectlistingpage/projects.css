@@ -1,0 +1,117 @@
+.projects-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* width: 100vw; */
+    min-height: 100vh;
+    margin: 0;
+    /* gap: 2rem; */
+  }
+  
+  .heading{
+    margin-top: 2rem;
+  }
+  .projects-list {
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    /* grid-template-columns: auto auto auto; */
+    grid-gap: 20px;
+    margin-top: 30px;
+    width: 70%;
+    padding: 0rem 0rem;
+    border-radius: 10px;
+    overflow: scroll;
+    scroll-behavior: auto;
+  }
+  
+  .project-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.1);
+    /* background-color: #d0dce1; */
+    background-color: #ffffff;
+
+    /* background-color:  rgba(121,111,9,1); */
+    /* background: rgb(104, 109, 206); */
+    /* background-image:url(../images/electric.jpg) */
+  }
+
+  .project-card:hover{
+    cursor: pointer;
+  }
+  .project-card h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .project-card p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+  .limited-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;  
+  }
+  
+  
+  .project-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .project-meta span {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #0062cc;
+  }
+  
+  .view-details {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    outline: none; 
+    border: none ;
+    margin: 0 2px;
+    border: 1px solid white;
+  }
+  
+  .view-details:hover {
+    background-color: #0062cc;
+  }
+
+  .loading-indicator {
+    margin: auto;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 8px solid rgba(33, 50, 98, 0.6);
+    border-left-color: #c9d2dc;
+    /* border-right-color: #010a15; */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+@media (max-width:450px) {
+  .projects-list{
+    width: 95%;
+  }
+}

@@ -1,0 +1,60 @@
+/* ... existing CSS ... */
+
+.menu-button {
+    display: none;
+    background-color: transparent;
+    color: #d4dbe0;
+    font-size: 24px;
+    border: none;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .menu-container {
+    display: none;
+    position: absolute;
+    background-color: #0e2037;
+    top: 60px;
+    right: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  @media (max-width: 550px) {
+    .navbar-menu {
+      display: none;
+    }
+  
+    .menu-button {
+      display: block;
+    }
+  
+    .menu-container.open {
+      display: block;
+    }
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* max-width: 1200px; */
+    margin: 0 auto;
+    /* padding: 1rem; */
+    position: relative;
+  }
+  
+  @media (max-width: 550px) {
+    .container {
+      justify-content: center;
+    }
+  
+    .navbar-logo {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  

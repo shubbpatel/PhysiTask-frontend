@@ -1,0 +1,123 @@
+/* Landing page styles */
+.frontPage{
+  margin-top: 0;
+}
+.background-image {
+  position: relative;
+}
+
+.background-image::before {
+  content: "";
+  background-image: url(./background.jpg);
+  background-size: contain;
+  background-position: center;
+  opacity: 0.9;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+
+  
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    /* background-color: #79e1f4; */
+  }
+  .nav-position{
+    position: fixed;
+    /* width: 60%; */
+    top:0rem;
+  }
+  .landing-page__header {
+    /* text-align: center;  */
+margin: auto;
+
+    /* margin-bottom: 2rem; */
+    z-index: 2;
+    /* backdrop-filter: blur(2px); */
+    padding: 2rem;
+    border-radius: 2rem;
+  }
+  
+  .landing-page__header h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: rgb(10, 0, 13);
+    padding: 1rem; 
+    color: white; 
+    border-radius: 20px;
+  }
+  
+  .landing-page__header p {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+ 
+  
+  .landing-page__header button:hover{
+    background-color:#0e2037;
+    color: #fff;  }
+ 
+  
+  .landing-page__header ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .landing-page__header li {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .landing-page__body img {
+    width: 100%;
+    max-width: 800px;
+  }
+  .buttonDiv{
+    gap: 1rem;
+  }
+
+  /* Media Queries */
+@media (max-width: 450px) {
+  .landing-page__header {
+    /* font-size: 2rem; */
+    z-index: 1;
+  }
+  .landing-page__header h1{
+    font-size: small;
+  }
+
+  .buttonDiv {
+    display: flex;
+    flex-direction: column;
+  }
+ 
+}
+
+@media (max-width: 550px) {
+  .landing-page__header {
+    /* font-size: 2rem; */
+    z-index: 1;
+  }
+  
+}
+
+@media (max-width: 750px) {
+  .landing-page__header h1 {
+    /* font-size: 2.8rem; */
+  }
+}
+
+@media (max-width: 1000px) {
+  .landing-page__header h1 {
+    font-size: 1.5rem;
+  }
+}

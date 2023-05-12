@@ -1,0 +1,42 @@
+.dashboard-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px;
+  }
+  
+  .dashboard-content {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .dashboard-section {
+    flex: 1 1 33%;
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .dashboard-section h3 {
+    margin-top: 0;
+  }
+  
+  .dashboard-section ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .dashboard-section ul li {
+    margin-bottom: 10px;
+  }
+  
+  .dashboard-section ul li a {
+    text-decoration: none;
+    color: #0073aa;
+  }
+  
+  .dashboard-section ul li a:hover {
+    text-decoration: underline;
+  }
+  

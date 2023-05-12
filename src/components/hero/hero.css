@@ -1,0 +1,84 @@
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../landingpage/background.jpg);
+    background-size: contain;
+    background-position: center;
+    height: 100vh;
+    color: #fff;
+  }
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* You can adjust the opacity (0.5) as needed */
+    z-index: 0;
+  }
+  
+  .navbarr {
+    position: absolute;
+    top: 0;
+    /* left: 0; */
+    /* right: 0; */
+  }
+  .hero-text {
+    text-align: center;
+    max-width: 800px;
+    z-index: 1;
+    position: relative;
+  }
+  
+  
+  .hero-text h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-text p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: white;
+  }
+  
+  .hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .get-started-btn,
+  .find-task-btn {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .get-started-btn {
+    background-color: #4285f4;
+    border: none;
+    color: #fff;
+  }
+  
+  .find-task-btn {
+    background-color: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+  }
+  
+  .get-started-btn:hover {
+    background-color: #306dbd;
+  }
+  
+  .find-task-btn:hover {
+    background-color: #4285f4;
+    border: 2px solid transparent;
+    color: #fff;
+  }
+  
