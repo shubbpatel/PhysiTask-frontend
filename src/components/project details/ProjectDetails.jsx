@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import style from "./projectDetails.css";
 import Navbar from "../navbar/Navbar";
+import backendUrl from "../../config";
 
 const ProjectDetails = ({ user }) => {
   const [post, setPost] = useState({});
@@ -17,7 +18,7 @@ const ProjectDetails = ({ user }) => {
   const fetchBids = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/bid/project/${id}`
+        `${backendUrl}/bid/project/${id}`
       );
       console.log(response.data);
       setBids(response.data);
@@ -44,7 +45,7 @@ const ProjectDetails = ({ user }) => {
       username: user.displayName,
     };
     try {
-      await axios.post("http://localhost:4000/bid", newBid);
+      await axios.post(`${backendUrl}/bid`, newBid);
       setBid({ amount: "", message: "" });
       alert("Bid submitted successfully!");
     } catch (error) {
@@ -59,7 +60,7 @@ const ProjectDetails = ({ user }) => {
 
   useEffect(() => {
     const fetchPost = async () => {
-      const response = await axios.get(`http://localhost:4000/project/${id}`);
+      const response = await axios.get(`${backendUrl}/project/${id}`);
       setPost(response.data);
       setUpdatedPost(response.data);
     };
@@ -69,7 +70,7 @@ const ProjectDetails = ({ user }) => {
 
   const updateProject = async () => {
     try {
-      await axios.put(`http://localhost:4000/projectupdate/${id}`, updatedPost);
+      await axios.put(`${backendUrl}/projectupdate/${id}`, updatedPost);
       setPost(updatedPost);
       setEditing(false);
     } catch (error) {
@@ -85,7 +86,7 @@ const ProjectDetails = ({ user }) => {
   const deleteProject = async () => {
     const id = post._id;
     try {
-      await axios.delete(`http://localhost:4000/projectdelete/${id}`);
+      await axios.delete(`${backendUrl}/projectdelete/${id}`);
       // handle successful deletion
       navigate("/profile");
     } catch (error) {

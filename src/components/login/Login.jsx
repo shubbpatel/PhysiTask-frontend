@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import style from "./login.css";
 import { Link } from "react-router-dom";
-import logoimg from '../navbar/logo.jpg'
+import logoimg from "../navbar/logo.jpg";
+import backendUrl from "../../config";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -11,35 +12,7 @@ function Login() {
     password: "",
   });
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      const response = await fetch("http://localhost:4000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-
-      
-      if (data.user) {
-        alert("login successfull");
-        window.location.href = '/projects'
-      } else {
-        alert("invalid username or password");
-      }
-
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    }
-
-    console.log(formData);
-  };
-
+  const [usr, setUsr] = useState({})
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -48,25 +21,37 @@ function Login() {
       [name]: value,
     }));
   };
-  // const dispatch = useDispatch();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-  // function handleLogin() {
-  //   // Make API call to authenticate user and retrieve user data
-  //   axios.post('http://localhost:4000/auth/google', { email, password })
-  //     .then(response => {
-  //       // Update user data in Redux store
-  //       dispatch({ type: 'SET_USER', payload: response.data });
-  //       // Redirect user to dashboard or other protected route
-  //       history.push('/dashboard');
-  //     })
-  //     .catch(error => {
-  //       // Handle error
-  //     });
-  // }
-  
-  const login  = ()=> {
-    window.open('http://localhost:4000/auth/google')
-  }
+    try {
+      const response = await fetch(`${backendUrl}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+      if (response.status === 200) {
+        localStorage.setItem("token", data.token); // Store the token in local storage
+        alert("login successful");
+        window.location.href = "/projects";
+      } else {
+        alert("invalid username or password");
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+
+  const login = () => {
+    window.open(`${backendUrl}/auth/google`);
+  };
 
   return (
     <div className="login gradient">
@@ -81,8 +66,8 @@ function Login() {
               height: "auto",
               padding: "0px",
               margin: "0px",
-              borderRadius:'5px',
-              marginBottom:'1rem'
+              borderRadius: "5px",
+              marginBottom: "1rem",
             }}
           />
         </Link>
@@ -111,18 +96,19 @@ function Login() {
             />
           </div>
           <div>
-
-          <button type="submit" className="buttonStyle">
-            Log In
-          </button>
+            <button type="submit" className="buttonStyle">
+              Log In
+            </button>
           </div>
         </form>
         <button class="google-btn" onClick={login}>
-  <img style={{marginRight:'10px'}} src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google logo" />
-  Sign in with Google
-</button>
-
-         
+          <img
+            style={{ marginRight: "10px" }}
+            src="https://img.icons8.com/color/16/000000/google-logo.png"
+            alt="Google logo"
+          />
+          Sign in with Google
+        </button>
       </div>
     </div>
   );

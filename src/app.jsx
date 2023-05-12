@@ -24,6 +24,7 @@ import TermsOfService from "./components/terms of services/TermsOfService";
 import HeroSection from "./components/hero/HeroSection";
 import BidderProfile from "./components/Bidders profile/BidderProfile";
 import Locss from "./components/projectsubmissionpage/Locss";
+import backendUrl from "./config";
 // import { reducer} from "./store/store";
 
 
@@ -35,26 +36,58 @@ export default function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const getUser = ()=> {
-    axios.get('http://localhost:4000/login/success',{
-      withCredentials:true
-    }).then(resObj => {
-      if(resObj.data){
-        const userData =JSON.parse(resObj.data);
-        setUser(userData);
-}
-      
-    }).catch(err => {
+    const getUser = () => {
+      axios.get(`${backendUrl}/login/success`, {
+        withCredentials: true
+      }).then(resObj => {
+        if(resObj.data) {
+          const userData = resObj.data;
+          // Check if userData is a string, if it is, parse it
+          if (typeof userData === 'string') {
+            setUser(JSON.parse(userData));
+          } else {
+            // If it's already an object, use it directly
+            setUser(userData);
+          }
+        }
+      }).catch(err => {
         console.log(err);
-      })
+      });
     };
-    getUser()
-    
+    getUser();
   }, []);
+  
   if(user !== null){
 
     console.log(user);
   }
+
+  useEffect(()=>{
+    async function getProfile() {
+      const token = localStorage.getItem('token'); // Assuming you're storing the token in localStorage
+      if (!token) {
+        console.log('No token!');
+        return;
+      }
+    
+      const response = await fetch(`${backendUrl}/userprofile`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+    
+      const data = await response.json();
+      if (response.ok) {
+        setUser(data)
+        console.log(data); // The user's profile data
+      } else {
+        console.log('Failed to get profile', data);
+      }
+    }
+    getProfile();
+  },[])
+  
+  
   
 
   return (

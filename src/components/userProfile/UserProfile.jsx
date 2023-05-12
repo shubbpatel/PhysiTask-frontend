@@ -3,6 +3,7 @@ import axios from "axios";
 import Navbar from "../navbar/Navbar";
 import { Link } from "react-router-dom";
 import "../userProfile/userprofile.css";
+import backendUrl from "../../config";
 
 const UserProfile = ({ user }) => {
   const [myPosts, setMyPosts] = useState([]);
@@ -21,7 +22,7 @@ const UserProfile = ({ user }) => {
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await axios.get(
-        `http://localhost:4000/profile/${user._id}`
+        `${backendUrl}/profile/${user._id}`
       );
       setMyPosts(response.data);
     };
@@ -45,33 +46,32 @@ const UserProfile = ({ user }) => {
           />
           <div className="profile-info">
             <div className="profile-info-row">
-              <span className="profile-label">First Name:</span>
+              <span className="profile-label"> Full Name:</span>
               <span className="profile-value">
-                {user ? user.displayName : ""}
+                {user ? user.fullName : ""}
               </span>
             </div>
+           
+            
             <div className="profile-info-row">
-              <span className="profile-label">Last Name:</span>
+              <span className="profile-label">E-mail:</span>
               <span className="profile-value">
-                {user ? user.displayName : ""}
+                {user? user.email:''}
               </span>
             </div>
             <div className="profile-info-row">
               <span className="profile-label">Mobile Number:</span>
-              <span className="profile-value">
-                {user ? user.displayName : ""}
+              <span className="profile-value">{user? user.phone:''}
               </span>
             </div>
             <div className="profile-info-row">
-              <span className="profile-label">Address:</span>
-              <span className="profile-value">
-                {user ? user.displayName : ""}
+              <span className="profile-label">Address</span>
+              <span className="profile-value">:{user? user.address:''}
               </span>
             </div>
             <div className="profile-info-row">
               <span className="profile-label">Aadhaar Number:</span>
               <span className="profile-value">
-                {user ? user.displayName : ""}
               </span>
             </div>
           </div>

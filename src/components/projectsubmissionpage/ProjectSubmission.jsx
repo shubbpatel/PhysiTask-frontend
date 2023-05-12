@@ -9,6 +9,7 @@ import {
   Marker,
   Autocomplete,
 } from "@react-google-maps/api";
+import backendUrl from "../../config";
 // import { Loader } from "@googlemaps/js-api-loader";
 
 const libraries = ["places"];
@@ -82,11 +83,11 @@ const ProjectSubmission = ({ user }) => {
     // mapInstance.setZoom(15); // Adjust the zoom level as desired
 
   };
-  
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     let timer;
-    if (!user) {
+    if (!user && !token) {
       timer = setTimeout(() => {
         window.location = "/login";
       }, 500); // Redirect after 5 seconds
@@ -122,7 +123,7 @@ const ProjectSubmission = ({ user }) => {
     } else {
       try {
         const response = await axios.post(
-          "http://localhost:4000/projectsubmission",
+          `${backendUrl}/projectsubmission`,
           formData
         );
         console.log(response.data);

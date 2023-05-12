@@ -3,12 +3,12 @@ import style from './signup.css';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import logoimg from '../components/navbar/logo.jpg'
+import backendUrl from "../config";
 
 
 function Signup() {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    fullName: "",
     phone: "",
     email: "",
     password: "",
@@ -17,15 +17,19 @@ function Signup() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-        const response = await fetch('http://localhost:4000/signup', {
+        const response = await fetch(`${backendUrl}/newuser`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(formData)
         });
-        const data = await response.json();
-        console.log(data);
+        // const data = await response.json();
+        if(response.status ===200){
+          window.location.href = '/login'
+        }
+        console.log(response);
+        
       } catch (error) {
         console.error(error);
       }
@@ -61,27 +65,17 @@ function Signup() {
         <form onSubmit={handleSubmit}>
           <h2 className="signup-title">Create Your Account</h2>
           <div className="form-group">
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="fullName">Full Name</label>
             <input
               type="text"
-              name="firstName"
-              id="firstName"
-              value={formData.firstName}
+              name="fullName"
+              id="fullName"
+              value={formData.fullName}
               onChange={handleInputChange}
               required
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="lastName">Last Name</label>
-            <input
-              type="text"
-              name="lastName"
-              id="lastName"
-              value={formData.lastName}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+          
           <div className="form-group">
             <label htmlFor="phone">Phone Number</label>
             <input

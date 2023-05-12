@@ -25,6 +25,7 @@
     flex-direction: row;
     align-items: center;
     gap: 2rem;
+    margin-bottom: 2rem;
   }
   
   .profile-image {
@@ -52,9 +53,14 @@
   .profile-label {
     font-weight: bold;
     color: #444;
+    margin-right: 3rem;
   }
   
   .profile-value {
     color: #777;
   }
-  
+  @media (max-width:550px) {
+    .profile-card{
+      flex-direction: column;
+    }
+  }

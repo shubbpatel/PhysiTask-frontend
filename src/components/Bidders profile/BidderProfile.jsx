@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Navbar from "../navbar/Navbar";
+import backendUrl from "../../config";
 
 const BidderProfile = ({user}) => {
   const [bidder, setBidder] = useState(null);
@@ -11,7 +12,7 @@ const BidderProfile = ({user}) => {
   useEffect(() => {
     const fetchBidder = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/biddersprofile/${bidderId}`);
+        const response = await axios.get(`${backendUrl}/biddersprofile/${bidderId}`);
         setBidder(response.data);
       } catch (error) {
         console.log("Failed to fetch bidder profile");

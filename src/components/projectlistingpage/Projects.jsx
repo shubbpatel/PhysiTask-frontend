@@ -3,6 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Navbar from '../navbar/Navbar';
 import style from './projects.css';
+import backendUrl from '../../config';
+import {
+  GoogleMap,
+  LoadScript,
+  Autocomplete,
+} from "@react-google-maps/api";
+
+const libraries = ["places"];  // add this
+
 
 const toRadians = (degrees) => {
   return (degrees * Math.PI) / 180;
@@ -31,10 +40,14 @@ const calculateDistance = (userCoordinates, projectCoordinates) => {
 const Projects = ({ user }) => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true); // Add loading state
+  const [autocomplete, setAutocomplete] = useState(null); // add this
+  const [userCoordinates, setUserCoordinates] = useState(''); // add this
+
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     let timer;
-    if (!user) {
+    if (!user && !token) {
       timer = setTimeout(() => {
         window.location = '/login';
       }, 20000); // Redirect after 5 seconds
@@ -42,22 +55,41 @@ const Projects = ({ user }) => {
     return () => clearTimeout(timer);
   }, [user]);
 
+  const onLoad = (autoC) => {
+    setAutocomplete(autoC);
+  };
+  const onPlaceChanged = () => {
+    if (!autocomplete) return;
+    const place = autocomplete.getPlace();
+
+    if (!place.geometry || !place.geometry.location) {
+      return;
+    }
+
+    const lat = place.geometry.location.lat();
+    const lng = place.geometry.location.lng();
+
+    setUserCoordinates(`${lat},${lng}`);
+  };
+
   useEffect(() => {
-    const fetchProjects = async () => {
+    setLoading(true)
+    const fetchProjects = async (userCoordinate) => {
       try {
         
-        const res = await fetch('http://localhost:4000/project');
-        const data = await res.json();
+        const res = await axios.get(`${backendUrl}/project`);
+        const data = await res.data
         
-        const getUserLocation = () => {
-          return new Promise((resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(resolve, reject);
-          });
-        };
+        // const getUserLocation = () => {
+        //   return new Promise((resolve, reject) => {
+        //     navigator.geolocation.getCurrentPosition(resolve, reject);
+        //   });
+        // };
         
-        const position = await getUserLocation();
-        // const userCoordinates = `${position.coords.latitude},${position.coords.longitude}`;
-        const userCoordinates = '23.1685786,79.9338798';
+        // const position = await getUserLocation();
+        // // const userCoordinates = `${position.coords.latitude},${position.coords.longitude}`;
+        const userCoordinates = userCoordinate;
+        // const userCoordinates = '24.8003118,80.97329239999999';
         const radius = 10; // 10 km radius
         
         const filteredProjects = data.filter((project) => {
@@ -75,9 +107,21 @@ const Projects = ({ user }) => {
         console.log(err);
       }
     };
-  
-    fetchProjects();
-  }, []);
+
+   if (userCoordinates) {
+      fetchProjects(userCoordinates);
+    }else{
+      const allProjects = async ()=>{
+        setLoading(true)
+        const res = await axios.get(`${backendUrl}/project`);
+        const data = await res.data;
+        setProjects(data);
+      }
+      allProjects();
+      setLoading(false)
+    }
+    // fetchProjects();
+  }, [userCoordinates]);
   
 
   return (
@@ -86,8 +130,20 @@ const Projects = ({ user }) => {
         <Navbar user={user} />
       </div>
       <div className="heading">
-        <h1>Available काम</h1>
-      </div>
+        {/* <h3>Location</h3> */}
+
+      <LoadScript
+        googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+        libraries={libraries}
+        >
+        <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+          <input
+            type="text"
+            placeholder="Enter Your Location"
+            />
+        </Autocomplete>
+      </LoadScript>
+            </div>
 
 {
   loading? (
@@ -108,7 +164,7 @@ const Projects = ({ user }) => {
               <span>{project.location}</span>
             </div>
             <Link
-              to={user ? `/projectDetails/${project._id}` : '/login'}
+              to={user || token ? `/projectDetails/${project._id}` : '/login'}
               className="view-details"
               >
               View Details
